@@ -4,6 +4,9 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import pageObject.loginPageObjects;
+
 import static org.junit.Assert.assertEquals;
 
 public class Login extends TestBase {
@@ -12,58 +15,58 @@ public class Login extends TestBase {
 	public void LoginFail1()
 	{
 		//Enter incorrect username and correct password
-		driver.findElement(usernameTxtBox).sendKeys(incorrectUsername);
-		driver.findElement(passwordTxtBox).sendKeys(correctPassword);
-		driver.findElement(loginButton).click();
+		driver.findElement(loginPageObjects.usernameTxtBox).sendKeys(loginPageObjects.incorrectUsername);
+		driver.findElement(loginPageObjects.passwordTxtBox).sendKeys(loginPageObjects.correctPassword);
+		driver.findElement(loginPageObjects.loginButton).click();
 		
-		String loginStatusText = driver.findElement(loginStatus).getText();
+		String loginStatusText = driver.findElement(loginPageObjects.loginStatus).getText();
 			
-		assertEquals(failed, loginStatusText);
+		assertEquals(loginPageObjects.failed, loginStatusText);
 	}
 	
 	@Test
 	public void LoginFail2()
 	{
 		//Enter correct username and incorrect password
-		driver.findElement(usernameTxtBox).sendKeys(correctUsername);
-		driver.findElement(passwordTxtBox).sendKeys(incorrectPassword);
-		driver.findElement(loginButton).click();
+		driver.findElement(loginPageObjects.usernameTxtBox).sendKeys(loginPageObjects.correctUsername);
+		driver.findElement(loginPageObjects.passwordTxtBox).sendKeys(loginPageObjects.incorrectPassword);
+		driver.findElement(loginPageObjects.loginButton).click();
 		
-		String loginStatusText = driver.findElement(loginStatus).getText();
+		String loginStatusText = driver.findElement(loginPageObjects.loginStatus).getText();
 		
 		
-		assertEquals(failed, loginStatusText);
+		assertEquals(loginPageObjects.failed, loginStatusText);
 	}
 	
 	@Test
 	public void SuccessfulLogin() throws InterruptedException
 	{
 		//Enter correct username and correct password
-		driver.findElement(usernameTxtBox).sendKeys(correctUsername);
-		driver.findElement(passwordTxtBox).sendKeys(correctPassword);
-		driver.findElement(loginButton).click();
+		driver.findElement(loginPageObjects.usernameTxtBox).sendKeys(loginPageObjects.correctUsername);
+		driver.findElement(loginPageObjects.passwordTxtBox).sendKeys(loginPageObjects.correctPassword);
+		driver.findElement(loginPageObjects.loginButton).click();
 				
         WebDriverWait wait = new WebDriverWait(driver, 3);
-        wait.until(ExpectedConditions.textToBePresentInElement(driver.findElement(loginStatus), successful));
+        wait.until(ExpectedConditions.textToBePresentInElement(driver.findElement(loginPageObjects.loginStatus), loginPageObjects.successful));
 		
-		String loginStatusText = driver.findElement(loginStatus).getText();
-        assertEquals(successful, loginStatusText);
+		String loginStatusText = driver.findElement(loginPageObjects.loginStatus).getText();
+        assertEquals(loginPageObjects.successful, loginStatusText);
 	}
 	
 	@Test
 	public void BoundaryTestForUsername1()
 	{
 		//Enter 3 characters on username field.
-		driver.findElement(usernameTxtBox).sendKeys("abc");
-		driver.findElement(passwordTxtBox).sendKeys(incorrectPassword);
-		driver.findElement(loginButton).click();
+		driver.findElement(loginPageObjects.usernameTxtBox).sendKeys("abc");
+		driver.findElement(loginPageObjects.passwordTxtBox).sendKeys(loginPageObjects.incorrectPassword);
+		driver.findElement(loginPageObjects.loginButton).click();
 		
 		
 		if (isAlertPresent())
 		{
 			String alertText = driver.switchTo().alert().getText();
 			driver.switchTo().alert().accept();
-			assertEquals(alertText, shortUsernameWarning);
+			assertEquals(alertText, loginPageObjects.shortUsernameWarning);
 		}
 		else
 	         System.out.println("Alert didn't show up!");
@@ -73,14 +76,14 @@ public class Login extends TestBase {
 	public void BoundaryTestForUsername2()
 	{
 		//Enter 4 characters on username field.
-		driver.findElement(usernameTxtBox).sendKeys("abcd");
-		driver.findElement(passwordTxtBox).sendKeys("incorrectPassword");
-		driver.findElement(loginButton).click();
+		driver.findElement(loginPageObjects.usernameTxtBox).sendKeys("abcd");
+		driver.findElement(loginPageObjects.passwordTxtBox).sendKeys(loginPageObjects.incorrectPassword);
+		driver.findElement(loginPageObjects.loginButton).click();
 		
 		if (!isAlertPresent())
 		{
-			String loginStatusText = driver.findElement(loginStatus).getText();
-			assertEquals(loginStatusText, failed);
+			String loginStatusText = driver.findElement(loginPageObjects.loginStatus).getText();
+			assertEquals(loginStatusText, loginPageObjects.failed);
 		}
 		else
 	         System.out.println("Alert showed up!");
@@ -92,16 +95,16 @@ public class Login extends TestBase {
 		//Enter 16 characters on username field.
 		for(int i=1; i<=16; i++)
 		{
-			driver.findElement(usernameTxtBox).sendKeys("a");
+			driver.findElement(loginPageObjects.usernameTxtBox).sendKeys("a");
 		}
 		
-		driver.findElement(passwordTxtBox).sendKeys(incorrectPassword);
-		driver.findElement(loginButton).click();
+		driver.findElement(loginPageObjects.passwordTxtBox).sendKeys(loginPageObjects.incorrectPassword);
+		driver.findElement(loginPageObjects.loginButton).click();
 		
 		if (!isAlertPresent())
 		{
-			String loginStatusText = driver.findElement(loginStatus).getText();
-			assertEquals(loginStatusText, failed);
+			String loginStatusText = driver.findElement(loginPageObjects.loginStatus).getText();
+			assertEquals(loginStatusText, loginPageObjects.failed);
 		}
 		else
 	         System.out.println("Alert showed up!");
@@ -115,10 +118,10 @@ public class Login extends TestBase {
 		String character="a";
 		for(int i=1; i<=17; i++)
 		{
-			driver.findElement(usernameTxtBox).sendKeys(character);
+			driver.findElement(loginPageObjects.usernameTxtBox).sendKeys(character);
 		}
 			
-		int length = driver.findElement(usernameTxtBox).getText().length();
+		int length = driver.findElement(loginPageObjects.usernameTxtBox).getText().length();
 		assertEquals(16, length);
 	}
 	
@@ -126,16 +129,16 @@ public class Login extends TestBase {
 	public void BoundaryTestForPassword1()
 	{
 		//Enter 3 characters on password field.
-		driver.findElement(usernameTxtBox).sendKeys(incorrectUsername);
-		driver.findElement(passwordTxtBox).sendKeys("abc");
-		driver.findElement(loginButton).click();
+		driver.findElement(loginPageObjects.usernameTxtBox).sendKeys(loginPageObjects.incorrectUsername);
+		driver.findElement(loginPageObjects.passwordTxtBox).sendKeys("abc");
+		driver.findElement(loginPageObjects.loginButton).click();
 		
 		
 		if (isAlertPresent())
 		{
 			String alertText = driver.switchTo().alert().getText();
 			driver.switchTo().alert().accept();
-			assertEquals(alertText, shortPasswordWarning);
+			assertEquals(alertText, loginPageObjects.shortPasswordWarning);
 		}
 		else
 	         System.out.println("Alert didn't show up!");
@@ -145,14 +148,14 @@ public class Login extends TestBase {
 	public void BoundaryTestForPassword2()
 	{
 		//Enter 4 characters on password field.
-		driver.findElement(usernameTxtBox).sendKeys(incorrectUsername);
-		driver.findElement(passwordTxtBox).sendKeys("abcd");
-		driver.findElement(loginButton).click();
+		driver.findElement(loginPageObjects.usernameTxtBox).sendKeys(loginPageObjects.incorrectUsername);
+		driver.findElement(loginPageObjects.passwordTxtBox).sendKeys("abcd");
+		driver.findElement(loginPageObjects.loginButton).click();
 		
 		if (!isAlertPresent())
 		{
-			String loginStatusText = driver.findElement(loginStatus).getText();
-			assertEquals(loginStatusText, failed);
+			String loginStatusText = driver.findElement(loginPageObjects.loginStatus).getText();
+			assertEquals(loginStatusText, loginPageObjects.failed);
 		}
 		else
 	         System.out.println("Alert showed up!");
@@ -162,20 +165,20 @@ public class Login extends TestBase {
 	public void BoundaryTestForPassword3()
 	{
 		//Enter 8 characters on password field.
-		driver.findElement(usernameTxtBox).sendKeys(incorrectUsername);
+		driver.findElement(loginPageObjects.usernameTxtBox).sendKeys(loginPageObjects.incorrectUsername);
 
 		String character="a";
 		for(int i=1; i<9; i++)
 		{
-			driver.findElement(passwordTxtBox).sendKeys(character);
+			driver.findElement(loginPageObjects.passwordTxtBox).sendKeys(character);
 		}
 		
-		driver.findElement(loginButton).click();
+		driver.findElement(loginPageObjects.loginButton).click();
 		
 		if (!isAlertPresent())
 		{
-			String loginStatusText = driver.findElement(loginStatus).getText();
-			assertEquals(loginStatusText, failed);
+			String loginStatusText = driver.findElement(loginPageObjects.loginStatus).getText();
+			assertEquals(loginStatusText, loginPageObjects.failed);
 		}
 		else
 	         System.out.println("Alert showed up!");
@@ -189,7 +192,7 @@ public class Login extends TestBase {
 		String character="a";
 		for(int i=1; i<=9; i++)
 		{
-			driver.findElement(passwordTxtBox).sendKeys(character);
+			driver.findElement(loginPageObjects.passwordTxtBox).sendKeys(character);
 		}
 				
 		int length = driver.findElement(By.name("password")).getText().length();
