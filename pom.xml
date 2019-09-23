@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>finartz</groupId>
+  <groupId>thedemosite.co.uk</groupId>
   <artifactId>selenium_mvn</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>Selenium Project for Finartz</name>
-  <description>Selenium Project for Finartz</description>
+  <name>Selenium Project</name>
+  <description>Automation of login cases with Selenium</description>
 
 	<dependencies>
 		<dependency>
